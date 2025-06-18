@@ -1,0 +1,121 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+/* Header */
+#header {
+  background-color: #343a40;
+  color: white;
+  padding: 25px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Layout */
+#main-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px;
+}
+
+/* Input Card */
+.card.input {
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 30px;
+  width: 35%;
+  min-height: 600px;
+  box-sizing: border-box;
+}
+
+/* Output Card (Wider) */
+.card.output {
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 30px;
+  width: 60%;
+  min-height: 600px;
+  box-sizing: border-box;
+}
+
+/* Common styles */
+.card h3 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+select, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#dataTable {
+  padding-top: 15px;
+  font-size: 14px;
+}
+
+/* Toggle Button Styles */
+.criterion-toggle {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.criterion {
+  flex: 1;
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  background-color: #e0e0e0;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.criterion:hover {
+  background-color: #d0d0d0;
+}
+
+.criterion.selected {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}

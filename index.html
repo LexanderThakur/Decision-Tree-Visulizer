@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Decision Tree Visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Page Header -->
+  <div id="header">
+    Decision Tree Classification Visualizer
+  </div>
+
+  <!-- Main Layout: 2 Cards -->
+  <div id="main-card-container">
+    
+    <!-- Input Card -->
+    <div class="card input">
+      <h3>Data Generation</h3>
+
+      <label>No. of Samples: <span id="samplesVal">100</span></label>
+      <input type="range" id="numSamples" min="50" max="1000" step="50" value="100"
+             oninput="document.getElementById('samplesVal').innerText = this.value">
+
+      <label>No. of Clusters: <span id="clustersVal">3</span></label>
+      <input type="range" id="numClusters" min="2" max="10" value="3"
+             oninput="document.getElementById('clustersVal').innerText = this.value">
+
+      <label>Variance: <span id="varianceVal">1.0</span></label>
+      <input type="range" id="variance" min="0.1" max="5.0" step="0.1" value="1.0"
+             oninput="document.getElementById('varianceVal').innerText = this.value">
+
+      <button onclick="generateData()">Generate</button>
+
+      <!-- Separator -->
+      <hr style="margin: 25px 0;">
+
+      <h3>Model Parameters</h3>
+
+      <label>Max Tree Depth: <span id="depthVal">3</span></label>
+      <input type="range" id="maxDepth" min="1" max="10" value="3"
+             oninput="document.getElementById('depthVal').innerText = this.value">
+
+      <label>Splitting Criterion:</label>
+      <div class="criterion-toggle">
+        <button id="giniBtn" class="criterion selected" onclick="selectCriterion('gini')">Gini</button>
+        <button id="entropyBtn" class="criterion" onclick="selectCriterion('entropy')">Entropy</button>
+      </div>
+
+      <input type="hidden" id="criterion" value="gini">
+
+      <button onclick="visualizeModel()">Visualize</button>
+    </div>
+
+    <!-- Output/Plot Card -->
+    <div class="card output">
+      <h3>Generated Data Preview</h3>
+      <div id="dataTable">No data yet.</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
