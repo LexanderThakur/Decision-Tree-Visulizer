@@ -37,7 +37,7 @@ async function generateData() {
           })
           data=await response.json()
 
-          console.log(data.message);
+          console.log('Generate try block done');
 
 
 
@@ -45,9 +45,7 @@ async function generateData() {
       catch(err){
         console.log(err.message)
       }
-      finally{
-        console.log('Generate try block done');
-      }
+     
 
   
 }
