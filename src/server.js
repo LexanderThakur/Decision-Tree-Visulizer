@@ -20,9 +20,19 @@ res.sendFile(path.join(__dirname,'public','index.html'))
 
 })
 
+
+app.post('/Generate',(req,res)=>{
+    const {n_Samples,num_Clusters,variance}=req.body;
+
+    console.log(n_Samples+"\n"+num_Clusters+"\n"+variance);
+
+     res.json({ message: "Received!" });    
+
+})
+
 app.listen(PORT,()=>{
 
 
-    console.log(`server on ${PORT}`)
+    console.log(`server on ${PORT} `)
 })
 

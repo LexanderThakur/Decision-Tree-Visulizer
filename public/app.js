@@ -1,3 +1,7 @@
+var isGenerating=false;
+var isVisualizing=false;
+const apiBase="/";
+
 function selectCriterion(value) {
   document.getElementById("criterion").value = value;
 
@@ -12,16 +16,40 @@ function selectCriterion(value) {
   }
 }
 
-function generateData() {
+async function generateData() {
+
+  if(isGenerating||isVisualizing) return;
+
+  
+
   const samples = document.getElementById("numSamples").value;
   const clusters = document.getElementById("numClusters").value;
   const variance = document.getElementById("variance").value;
+      try{
+          let data;
+          const response=await fetch(apiBase+"Generate",{
+            method:'POST',
+            headers: {'Content-Type':'application/json' },
+            body: JSON.stringify({n_Samples:samples,num_Clusters:clusters,variance:variance})
 
-  console.log("Generating data with:", { samples, clusters, variance });
 
-  // Placeholder
-  document.getElementById("dataTable").innerText =
-    `Generated ${samples} samples with ${clusters} clusters and variance ${variance}`;
+
+          })
+          data=await response.json()
+
+          console.log(data.message);
+
+
+
+      }
+      catch(err){
+        console.log(err.message)
+      }
+      finally{
+        console.log('Generate try block done');
+      }
+
+  
 }
 
 function visualizeModel() {
