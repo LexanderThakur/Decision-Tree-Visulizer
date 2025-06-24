@@ -37,7 +37,9 @@ async function generateData() {
           })
           data=await response.json()
 
-          console.log('Generate try block done');
+          const plotJson=data.flaskData.plot;
+          Plotly.newPlot('')
+
 
 
 
