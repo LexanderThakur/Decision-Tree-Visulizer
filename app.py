@@ -32,12 +32,18 @@ def generat():
 
     X=np.array(X)
 
-    fig=px.scatter(
-        x=X[:,0],
-        y=X[:,1],
-        color=[str(label) for label in y],
-        title='Generated Data'
+    fig = px.scatter(
+    x=X[:, 0],
+    y=X[:, 1],
+    color=[str(label) for label in y],
+    title='Generated Data',
     )
+    fig.update_traces(marker=dict(size=8, opacity=0.8, line=dict(width=1, color='DarkSlateGrey')))
+
+    print(f"X shape: {np.array(X).shape}")
+    print(f"First 5 X points: {X[:5]}")
+    print(f"Labels: {y[:5]}")
+
     plot_json=json.loads(fig.to_json())
 
 

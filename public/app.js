@@ -38,10 +38,12 @@ async function generateData() {
           data=await response.json()
 
           const plotJson=data.flaskData.plot;
-          Plotly.newPlot('')
+          console.log('Plot Json:',plotJson);
+          Plotly.react('plotDiv', plotJson.data, plotJson.layout, {responsive: true});
 
 
 
+          console.log("plot rendered");
 
       }
       catch(err){
