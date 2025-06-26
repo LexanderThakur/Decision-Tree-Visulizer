@@ -41,7 +41,7 @@ app.post('/Generate',async (req,res)=>{
         res.json({flaskData} );  
     }
     catch(err){
-        console.log("fail")
+        console.log("fail",err.message)
     }
 
        
