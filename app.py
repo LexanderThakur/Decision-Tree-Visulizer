@@ -81,16 +81,16 @@ def find_best_split(rows):
 
 
 
-def build_tree(rows):
+def build_tree(rows,max_depth=3,depth=0):
   gain,question=find_best_split(rows)
   
-  if gain==0:
+  if gain==0 or depth>=max_depth :
     return Leaf(rows)
 
   true_rows,false_rows=partition(rows,question)
 
-  true_branch=build_tree(true_rows)
-  false_branch=build_tree(false_rows)
+  true_branch=build_tree(true_rows,max_depth,depth+1)
+  false_branch=build_tree(false_rows,max_depth,depth+1)
 
   return Decision_Node(question,true_branch,false_branch)
 
@@ -111,6 +111,7 @@ def generat():
     n_samples=int(data.get('n_Samples',100))
     n_clusters=int(data.get('num_Clusters',3))
     variance=float(data.get('variance',1.0))
+    max_depth=int(data.get('max_depth',3))
 
     samples_per_cluster=n_samples//n_clusters
     X=[]
@@ -132,7 +133,7 @@ def generat():
     X=np.array(X)
     
     dataset= [X[i]+[y[i]] for i in range(len(X))]
-    tree=build_tree(dataset)
+    tree=build_tree(dataset,max_depth)
     x_min,x_max=np.min(X,axis=0)[0]-1,np.max(X,axis=0)[0]+1
     y_min,y_max=np.min(X,axis=0)[1]-1,np.max(X,axis=0)[1]+1
 
@@ -140,39 +141,53 @@ def generat():
     xx,yy=np.meshgrid(np.arange(x_min,x_max,resolution),np.arange(y_min,y_max,resolution))
 
     grid_points=np.c_[xx.ravel(),yy.ravel()]
+    Z = np.array([int(classify(tree, list(point))) for point in grid_points])
 
-    Z=np.array([classify(tree,list(point)) for point in grid_points])
+   # Z=np.array([classify(tree,list(point)) for point in grid_points])
     Z=Z.reshape(xx.shape)
 
-    contour=go.Contour(
+    # contour=go.Contour(
       
-        x=np.arange(x_min,x_max,resolution),
-        y=np.arange(y_min,y_max,resolution),
-        z=Z,
-        colorscale='Viridis',
-        opacity=0.5,
-        showscale=False,
-        contours=dict(coloring='fill')
+    #     x=np.arange(x_min,x_max,resolution),
+    #     y=np.arange(y_min,y_max,resolution),
+    #     z=Z,
+    #     colorscale='Viridis',
+    #     opacity=0.5,
+    #     showscale=False,
+    #     contours=dict(coloring='fill')
 
 
 
+    # )
+ 
+    n_classes = len(set(y))
+    discrete_colors = ['#636EFA', '#00CC96', '#EF553B', '#FFA15A', '#19D3F3']
+    color_slice = discrete_colors[:n_classes]
+
+
+    contour = go.Contour(
+    x=np.arange(x_min, x_max, resolution),
+    y=np.arange(y_min, y_max, resolution),
+    z=Z,
+    colorscale=[[i / (n_classes - 1), color_slice[i]] for i in range(n_classes)],
+    opacity=0.5,
+    showscale=False,
+    contours=dict(coloring='heatmap', showlines=False)
     )
-    scatter=go.Scatter(
+
+    scatter = go.Scatter(
     x=[pt[0] for pt in X],
     y=[pt[1] for pt in X],
     mode='markers',
     marker=dict(
-        color=y,  
-        colorscale='Viridis',  
+        color=y,
+        colorscale=[[i / (n_classes - 1), color_slice[i]] for i in range(n_classes)],
         size=8,
-        line=dict(width=1, color='black')
+        line=dict(width=1, color='black'),
+        colorbar=None
     ),
     name='Data Points'
-
-
-
     )
-
     fig2=go.Figure(data=[contour,scatter])
     fig2.update_layout(title='Simple Gini Decision Tree', xaxis_title='X1', yaxis_title='X2')
 

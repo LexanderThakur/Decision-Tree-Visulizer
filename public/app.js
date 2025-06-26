@@ -16,14 +16,13 @@ function selectCriterion(value) {
   }
 }
 
-
 async function generateData() {
   if (isGenerating || isVisualizing) return;
 
   const samples = document.getElementById("numSamples").value;
   const clusters = document.getElementById("numClusters").value;
   const variance = document.getElementById("variance").value;
-
+  const depth = document.getElementById("maxDepth").value;
   try {
     const response = await fetch(apiBase + "Generate", {
       method: "POST",
@@ -32,16 +31,17 @@ async function generateData() {
         n_Samples: samples,
         num_Clusters: clusters,
         variance: variance,
+        max_depth: depth
       }),
     });
 
-    const flaskData = await response.json();
+    const json = await response.json();
 
-    // Store both plots in global variables
+    const flaskData = json.flaskData; 
+
     window.plotData = flaskData.plot;
     window.dPlotData = flaskData.d_plot;
 
-    // Show the initial scatter plot
     Plotly.react("plotDiv", window.plotData.data, window.plotData.layout, {
       responsive: true,
     });
@@ -51,6 +51,41 @@ async function generateData() {
     console.log("Error fetching data:", err.message);
   }
 }
+
+// async function generateData() {
+//   if (isGenerating || isVisualizing) return;
+
+//   const samples = document.getElementById("numSamples").value;
+//   const clusters = document.getElementById("numClusters").value;
+//   const variance = document.getElementById("variance").value;
+
+//   try {
+//     const response = await fetch(apiBase + "Generate", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         n_Samples: samples,
+//         num_Clusters: clusters,
+//         variance: variance,
+//       }),
+//     });
+
+//     const flaskData = await response.json();
+
+//     // Store both plots in global variables
+//     window.plotData = flaskData.plot;
+//     window.dPlotData = flaskData.d_plot;
+
+//     // Show the initial scatter plot
+//     Plotly.react("plotDiv", window.plotData.data, window.plotData.layout, {
+//       responsive: true,
+//     });
+
+//     console.log("Initial scatter plot rendered");
+//   } catch (err) {
+//     console.log("Error fetching data:", err.message);
+//   }
+// }
 // async function generateData() {
 //   let flaskData;
 // const response = await fetch(apiBase + "Generate", {
@@ -129,7 +164,7 @@ function visualizeModel() {
   });
 
   // Optional: show model config in data table
-  document.getElementById("dataTable").innerText +=
-    `\nModel: depth ${depth}, criterion ${criterion}`;
+  // document.getElementById("dataTable").innerText +=
+  //   `\nModel: depth ${depth}, criterion ${criterion}`;
 }
 

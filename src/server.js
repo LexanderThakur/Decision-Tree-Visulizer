@@ -23,7 +23,7 @@ res.sendFile(path.join(__dirname,'public','index.html'))
 
 
 app.post('/Generate',async (req,res)=>{
-    const {n_Samples,num_Clusters,variance}=req.body;
+    const {n_Samples,num_Clusters,variance,max_depth}=req.body;
 
     
 
@@ -32,7 +32,7 @@ app.post('/Generate',async (req,res)=>{
         const flaskResponse=await fetch('http://127.0.0.1:5000',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({n_Samples,num_Clusters,variance})
+            body:JSON.stringify({n_Samples,num_Clusters,variance,max_depth})
 
         });
 
