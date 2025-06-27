@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import fetch from 'node-fetch';
 const app=express()
 
-const PORT=  8083
+const PORT=  process.env.PORT || 3000;
 
 
 const __filename=fileURLToPath(import.meta.url)
