@@ -64,6 +64,7 @@ def find_best_split(rows):
   best_gain=0
   best_question=None
   current_uncertainity=gini(rows)
+ 
   n_features=len(rows[0])-1
   for col in range(n_features):
     values=set(row[col] for row in rows)
@@ -73,7 +74,7 @@ def find_best_split(rows):
       if len(true_rows) ==0 or len(false_rows) ==0:
         continue
       gain=info_gain(current_uncertainity,true_rows,false_rows)
-      if gain > best_gain:
+      if gain > best_gain :
         best_gain=gain
         best_question=question
   
@@ -84,7 +85,7 @@ def find_best_split(rows):
 def build_tree(rows,max_depth=3,depth=0):
   gain,question=find_best_split(rows)
   
-  if gain==0 or depth>=max_depth :
+  if gain==0  :
     return Leaf(rows)
 
   true_rows,false_rows=partition(rows,question)
@@ -137,13 +138,13 @@ def generat():
     x_min,x_max=np.min(X,axis=0)[0]-1,np.max(X,axis=0)[0]+1
     y_min,y_max=np.min(X,axis=0)[1]-1,np.max(X,axis=0)[1]+1
 
-    resolution=0.2
+    resolution=0.6
     xx,yy=np.meshgrid(np.arange(x_min,x_max,resolution),np.arange(y_min,y_max,resolution))
 
     grid_points=np.c_[xx.ravel(),yy.ravel()]
     Z = np.array([int(classify(tree, list(point))) for point in grid_points])
 
-   # Z=np.array([classify(tree,list(point)) for point in grid_points])
+   # Z=np.a rray([classify(tree,list(point)) for point in grid_points])
     Z=Z.reshape(xx.shape)
 
     # contour=go.Contour(
