@@ -29,7 +29,7 @@ app.post('/Generate',async (req,res)=>{
 
 
     try{
-        const flaskResponse=await fetch('http://127.0.0.1:5000',{
+        const flaskResponse=await fetch('https://decision-tree-visulizer-1.onrender.com',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({n_Samples,num_Clusters,variance,max_depth})
