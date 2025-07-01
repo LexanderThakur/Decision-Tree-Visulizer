@@ -105,7 +105,7 @@ def classify(node,row):
 
 
 
-@app.route('/',methods=['POST'])
+@app.route('/',methods=['POST','GET'])
 def generat():
     data=request.get_json()
 
