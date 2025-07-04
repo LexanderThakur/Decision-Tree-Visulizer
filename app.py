@@ -105,7 +105,10 @@ def classify(node,row):
 
 
 
-@app.route('/',methods=['POST','GET'])
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({"status": "Flask backend is up"}), 200
+@app.route('/',methods=['POST'])
 def generat():
     data=request.get_json()
 
